@@ -6,13 +6,13 @@ export const loginReducer=(state={},action)=>{
         case USER_LOGIN_REQUEST:
             return {loading:true};
         case USER_LOGIN_FAIL:
-            return {loading:false,error:action.error};
+            return {loading:false,message:action.error};
         case USER_LOGIN_SUCCESS:
-            return {loading:false,userInfo:action.payload};
+            return {loading:false,userInfo:action.payload,message:"success"};
         case USER_UPDATE_SUCCESS:
-            return {loading:false,userInfo:action.payload};
+            return {loading:false,userInfo:action.payload,message:"success"};
         case USER_UPDATE_FAIL:
-            return {loading:false,error:action.error};
+            return {loading:false,message:action.error};
         case USER_LOGOUT:
             return {};
         case USER_DELETE:
@@ -27,9 +27,9 @@ export const registerReducer=(state={},action)=>{
     case USER_REGISTER_REQUEST:
         return {loading:true};
     case USER_REGISTER_FAIL:
-        return {loading:false,error:action.error};
+        return {loading:false,message:action.error};
     case USER_REGISTER_SUCCESS:
-        return {loading:false,userInfo:action.payload};
+        return {loading:false,userInfo:action.payload,message:"success"};
     case USER_LOGOUT:
         return {};
     case USER_DELETE:

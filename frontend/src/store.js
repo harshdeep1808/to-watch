@@ -12,7 +12,12 @@ const reducers=combineReducers({
 
 const middleware=composeWithDevTools(applyMiddleware(ReduxThunk))
 
-const userInfo=localStorage.getItem('userInfo')
+let userInfo=localStorage.getItem('userInfo')
+if(!userInfo){
+    userInfo={
+        message:''
+    }
+}
 
 const store=createStore(reducers,{
          userRegister:userInfo,

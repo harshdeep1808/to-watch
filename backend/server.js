@@ -72,10 +72,13 @@ app.post('/user/login',async(req,res)=>{
        const userExists=await User.findOne({email})
        if(!userExists){
          
-        res.status(201).json({message:'User doesnot exist'})
+        res.status(201).json({message:`User does'not exist`})
        }
        else{
              const user =await User.findOne({email,password})
+             if(user===null)
+             res.status(201).json({message:"Incorrect password"})
+             else{
            res.status(201).json({
                id:user._id,
                name:user.name,
@@ -83,6 +86,7 @@ app.post('/user/login',async(req,res)=>{
                movies:user.movies,
                token:(await generateToken(user._id)).toString()
            })
+        }
        }
     }
     catch(error){

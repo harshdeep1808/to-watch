@@ -1,32 +1,42 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import {Form,Button} from 'react-bootstrap'
 import NavBar from '../components/Navbar.js'
 import Error from '../components/Error.js'
 import {register} from '../actions/userActions.js'
-
+import { createBrowserHistory } from 'history';
 const SignIn=()=>{
   const [name,changeName]=useState('')
   const [email,changeEmail]=useState('')
   const [password,changePassword]=useState('')
   const userRegister=useSelector((state)=>state.userRegister)
-  let error=null
+  let {message}=userRegister
+  const history=createBrowserHistory()
   const dispatch=useDispatch()
-
+             
   if(userRegister){
-      if(userRegister.error){
-        error=userRegister.error
-      }
+    if(userRegister.message){
+      message=userRegister.message
+    }
   }
 
-  const submitHandler=(e)=>{
-       e.preventDefault()
-       dispatch(register(name,email,password))      
-  }  
+useEffect(()=>{
+  if(userRegister&&userRegister.message==="success"){
+    history.push('/')
+    window.location.reload() 
+ }  
+},[history,userRegister])
+
+const submitHandler=async (e)=>{
+  e.preventDefault()
+  await dispatch(register(name,email,password))      
+}
+
+ 
       return (
         <div>
           <NavBar/>
-            {error?(<Error message={error}/>):(<></>)}
+            {message!==''?(<Error message={message}/>):(<></>)}
           <div className="form">
           <Form onSubmit={submitHandler}>
           <Form.Group controlId="formBasicEmail">
